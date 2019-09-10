@@ -9,7 +9,7 @@ products:
 - azure-iot-hub
 name: "Azure MXChip IoT DevKit Using IoT Plug and Play"
 description: "This is the sample codes for MXChip IoT DevKit using IoT Plug and Play. Sample code to connect the DevKit to your Azure IoT Central application."
-urlFragment: "mxchip-iot-devkit-pnp"
+urlFragment: "sample"
 ---
 
 ## Sample: Connect the DevKit to your Azure IoT Central application
