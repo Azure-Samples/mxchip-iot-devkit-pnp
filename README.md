@@ -23,7 +23,7 @@ If you want to explore and modify the device code, follow these steps.
 1. To download sample code for DevKit, run the following command on your desktop machine.
 
    ```cmd/sh
-   git clone https://github.com/likidu/mxchip-iot-devkit-pnp.git
+   git clone https://github.com/Azure-Samples/mxchip-iot-devkit-pnp.git
    ```
 
     > If **git** is not installed in your development environment, you can download it from [https://git-scm.com/download](https://git-scm.com/download).
