@@ -7,12 +7,12 @@ languages:
 products:
 - azure
 - azure-iot-hub
-name: "Azure MXChip IoT DevKit Using IoT Plug and Play"
+name: "Azure MXChip IoT DevKit connect to Azure IoT Central"
 description: "This is the sample codes for MXChip IoT DevKit using IoT Plug and Play. Sample code to connect the DevKit to your Azure IoT Central application."
 urlFragment: "sample"
 ---
 
-## Sample: Connect the DevKit to your Azure IoT Central application
+## Connect the DevKit to your Azure IoT Central application
 
 First, go to the [quickstart](https://docs.microsoft.com/azure/iot-central/howto-connect-devkit-pnp) tutorial to learn how to connect the DevKit to your Azure IoT Central application.
 
@@ -23,12 +23,12 @@ If you want to explore and modify the device code, follow these steps.
 1. To download sample code for DevKit, run the following command on your desktop machine.
 
    ```cmd/sh
-   git clone https://github.com/MXCHIP/IoTDevKit.git
+   git clone https://github.com/Azure-Samples/mxchip-iot-devkit-pnp.git
    ```
 
     > If **git** is not installed in your development environment, you can download it from [https://git-scm.com/download](https://git-scm.com/download).
 
-1. The source code is located in `pnp/iotc_devkit` folder.
+1. The source code is located in `Device` folder.
 
 To see how the telemetry is sent to the Azure IoT Central application, open the `sensor_interface.c` file.
 
