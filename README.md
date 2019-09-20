@@ -7,7 +7,7 @@ languages:
 products:
 - azure
 - azure-iot-hub
-name: "Connect the DevKit to Azure IoT Central"
+name: "Azure MXChip IoT DevKit connect to Azure IoT Central"
 description: "This is the sample codes for MXChip IoT DevKit using IoT Plug and Play. Sample code to connect the DevKit to your Azure IoT Central application."
 urlFragment: "sample"
 ---
