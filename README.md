@@ -60,7 +60,8 @@ In your Azure IoT Central application, select the **Administration** tab and sel
     - Your WiFi network password.
     - The connection details: the **Device ID** that you can choose yourself, and the **Scope ID** and **Group SAS Primary Key** you made a note of previously.
 
-    > [!NOTE]
+
+    > [NOTE]
     > Currently, the IoT DevKit only can connect to 2.4 GHz Wi-Fi, 5 GHz is not supported due to hardware restrictions.
 
 1. Choose **Configure Device**, the DevKit device reboots and runs the application:
