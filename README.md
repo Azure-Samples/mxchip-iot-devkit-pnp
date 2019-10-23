@@ -149,7 +149,7 @@ If you plan to modify the code, you should follow these instructions to [prepare
 
    ![Select board](media/howto-connect-devkit-pnp/select-board.png)
 
-1. In `pnp/iotc_devkit` folder, open **iotc_devkit.code-workspace** in VS Code.
+1. Open **iotc_devkit.code-workspace** in VS Code.
 
 1. Use **Ctrl+Shift+P** to open the command palette, enter and select **Arduino: Upload** to compile the project and upload to the DevKit.
 
