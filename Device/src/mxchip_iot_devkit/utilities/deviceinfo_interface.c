@@ -44,7 +44,7 @@ static void DeviceinfoInterface_PropertyCallback(DIGITALTWIN_CLIENT_RESULT digit
 DIGITALTWIN_CLIENT_RESULT DeviceinfoInterface_ReportProperty_Internal(DIGITALTWIN_INTERFACE_CLIENT_HANDLE interfaceHandle, const char* propertyName, const char* propertyData)
 {
     DIGITALTWIN_CLIENT_RESULT result = DigitalTwin_InterfaceClient_ReportPropertyAsync(interfaceHandle, propertyName,
-        (const char*)propertyData, NULL,
+        (const char*)propertyData, strlen(propertyData), NULL,
         DeviceinfoInterface_PropertyCallback, (void*)propertyName);
 
     if (result == DIGITALTWIN_CLIENT_OK)
