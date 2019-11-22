@@ -28,173 +28,65 @@ static void SensorsInterface_TelemetryCallback(DIGITALTWIN_CLIENT_RESULT digital
     if (digitalTwinTelemetryStatus == DIGITALTWIN_CLIENT_OK)
     {
         SendTelemetry_Succeeded_Callback("Sensors", (const char*)userContextCallback);
-        LogInfo("SENSORS_INTERFACE: DigitalTwin successfully delivered telemetry message for <%s>", (const char*)userContextCallback);
+        LogInfo("SENSORS_INTERFACE: DigitalTwin successfully delivered telemetry message", (const char*)userContextCallback);
     }
     else
     {
         SendTelemetry_Error_Callback("Sensors", (const char*)userContextCallback);
-        LogError("SENSORS_INTERFACE: DigitalTwin failed to deliver telemetry message for <%s>, error=<%s> ", (const char*)userContextCallback, MU_ENUM_TO_STRING(DIGITALTWIN_CLIENT_RESULT, digitalTwinTelemetryStatus));
+        LogError("SENSORS_INTERFACE: DigitalTwin failed to deliver telemetry message, error=<%s> ", (const char*)userContextCallback, MU_ENUM_TO_STRING(DIGITALTWIN_CLIENT_RESULT, digitalTwinTelemetryStatus));
     }
-}
-
-// SendTelemetry is a helper function which is periodically invoked by the caller to send telemetry
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_SendTelemetry_Internal(DIGITALTWIN_INTERFACE_CLIENT_HANDLE interfaceHandle, const char* telemetryName, const char* telemetryData)
-{
-    DIGITALTWIN_CLIENT_RESULT result;
-
-    result = DigitalTwin_InterfaceClient_SendTelemetryAsync(interfaceHandle, telemetryName, telemetryData,
-        SensorsInterface_TelemetryCallback, (void*)telemetryName);
-
-    if (result != DIGITALTWIN_CLIENT_OK)
-    {
-        LogError("SENSORS_INTERFACE:: DigitalTwin_InterfaceClient_SendTelemetryAsync failed for sending %s", telemetryName);
-    }
-    else
-    {
-        LogInfo("SENSORS_INTERFACE:: DigitalTwin_InterfaceClient_SendTelemetryAsync successfully sent %s", telemetryName);
-    }
-
-    DigitalTwinClientHelper_Check();
-    return result;
 }
 
 DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendAll()
 {
+    if (appState.interfaceClientHandle == NULL)
+    {
+        LogError("SENSORS_INTERFACE: interfaceClientHandle is required to be initialized before sending telemetries");
+    }
+
     DIGITALTWIN_CLIENT_RESULT result;
 
-    // NOTE: Future versions of SDK will support ability to send multiple telemetries in a single
-    // send.  For now, one at a time is sufficient albeit less efficient.
-    if (((result = SensorsInterface_Telemetry_SendHumidity()) != DIGITALTWIN_CLIENT_OK) ||
-        ((result = SensorsInterface_Telemetry_SendTemperature()) != DIGITALTWIN_CLIENT_OK) ||
-        ((result = SensorsInterface_Telemetry_SendPressure()) != DIGITALTWIN_CLIENT_OK) ||
-        ((result = SensorsInterface_Telemetry_SendMagnetometer()) != DIGITALTWIN_CLIENT_OK) ||
-        ((result = SensorsInterface_Telemetry_SendGyroscope()) != DIGITALTWIN_CLIENT_OK) ||
-        ((result = SensorsInterface_Telemetry_SendAccelerometer()) != DIGITALTWIN_CLIENT_OK) )
+    char combinedMessage[MAX_MASSAGE_SIZE];
+    char telemetryValue[MAX_MASSAGE_SIZE];
 
+    // Send multiple telemetries in a single message
+    sprintf(combinedMessage, "{");
+
+    Sensors_SerializeHumidityTelemetry(telemetryValue, MAX_MASSAGE_SIZE);
+
+    sprintf(combinedMessage + strlen(combinedMessage), "\"%s\":%s,", SensorsInterface_HumidityTelemetry, telemetryValue);
+
+    Sensors_SerializeTemperatureTelemetry(telemetryValue, MAX_MASSAGE_SIZE);
+
+    sprintf(combinedMessage + strlen(combinedMessage), "\"%s\":%s,", SensorsInterface_TemperatureTelemetry, telemetryValue);
+
+    Sensors_SerializePressureTelemetry(telemetryValue, MAX_MASSAGE_SIZE);
+
+    sprintf(combinedMessage + strlen(combinedMessage), "\"%s\":%s,", SensorsInterface_PressureTelemetry, telemetryValue);
+
+    Sensors_SerializeMagnetometerTelemetry(telemetryValue, MAX_MASSAGE_SIZE);
+
+    sprintf(combinedMessage + strlen(combinedMessage), "\"%s\":%s,", SensorsInterface_MagnetometerTelemetry, telemetryValue);
+
+    Sensors_SerializeGyroscopeTelemetry(telemetryValue, MAX_MASSAGE_SIZE);
+
+    sprintf(combinedMessage + strlen(combinedMessage), "\"%s\":%s,", SensorsInterface_GyroscopeTelemetry, telemetryValue);
+
+    Sensors_SerializeAccelerometerTelemetry(telemetryValue, MAX_MASSAGE_SIZE);
+
+    sprintf(combinedMessage + strlen(combinedMessage), "\"%s\":%s", SensorsInterface_AccelerometerTelemetry, telemetryValue);
+
+    sprintf(combinedMessage + strlen(combinedMessage), "}");
+
+    if ((result = DigitalTwin_InterfaceClient_SendTelemetryAsync(appState.interfaceClientHandle, (unsigned char*)combinedMessage, strlen(combinedMessage),
+        SensorsInterface_TelemetryCallback, NULL)) != DIGITALTWIN_CLIENT_OK)
     {
-        LogError("SENSORS_INTERFACE: failed to send telemetries");
-    }
-    else
-    {
-        LogInfo("SENSORS_INTERFACE: Queuing of all telemetries to be sent has succeeded");
+        LogError("SENSORS_INTERFACE: DigitalTwin_InterfaceClient_SendTelemetryAsync failed for sending telemetry.");
     }
 
     return result;
 }
 
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendHumidity()
-{
-    if (appState.interfaceClientHandle == NULL)
-    {
-        LogError("SENSORS_INTERFACE: interfaceClientHandle is required to be initialized before sending telemetries");
-    }
-
-    char payloadBuffer[MAX_MASSAGE_SIZE];
-    if (Sensors_SerializeHumidityTelemetry(payloadBuffer, MAX_MASSAGE_SIZE))
-    {
-        return SensorsInterface_SendTelemetry_Internal(appState.interfaceClientHandle, SensorsInterface_HumidityTelemetry, payloadBuffer);
-    }
-    else
-    {
-        LogError("SENSORS_INTERFACE: serialize telemetry message humidity failed.");
-        return DIGITALTWIN_CLIENT_ERROR;
-    }
-}
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendTemperature()
-{
-    if (appState.interfaceClientHandle == NULL)
-    {
-        LogError("SENSORS_INTERFACE: interfaceClientHandle is required to be initialized before sending telemetries");
-    }
-
-    char payloadBuffer[MAX_MASSAGE_SIZE];
-    if (Sensors_SerializeTemperatureTelemetry(payloadBuffer, MAX_MASSAGE_SIZE))
-    {
-        return SensorsInterface_SendTelemetry_Internal(appState.interfaceClientHandle, SensorsInterface_TemperatureTelemetry, payloadBuffer);
-    }
-    else
-    {
-        LogError("SENSORS_INTERFACE: serialize telemetry message temperature failed.");
-        return DIGITALTWIN_CLIENT_ERROR;
-    }
-}
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendPressure()
-{
-    if (appState.interfaceClientHandle == NULL)
-    {
-        LogError("SENSORS_INTERFACE: interfaceClientHandle is required to be initialized before sending telemetries");
-    }
-
-    char payloadBuffer[MAX_MASSAGE_SIZE];
-    if (Sensors_SerializePressureTelemetry(payloadBuffer, MAX_MASSAGE_SIZE))
-    {
-        return SensorsInterface_SendTelemetry_Internal(appState.interfaceClientHandle, SensorsInterface_PressureTelemetry, payloadBuffer);
-    }
-    else
-    {
-        LogError("SENSORS_INTERFACE: serialize telemetry message pressure failed.");
-        return DIGITALTWIN_CLIENT_ERROR;
-    }
-}
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendMagnetometer()
-{
-    if (appState.interfaceClientHandle == NULL)
-    {
-        LogError("SENSORS_INTERFACE: interfaceClientHandle is required to be initialized before sending telemetries");
-    }
-
-    char payloadBuffer[MAX_MASSAGE_SIZE];
-    if (Sensors_SerializeMagnetometerTelemetry(payloadBuffer, MAX_MASSAGE_SIZE))
-    {
-        return SensorsInterface_SendTelemetry_Internal(appState.interfaceClientHandle, SensorsInterface_MagnetometerTelemetry, payloadBuffer);
-    }
-    else
-    {
-        LogError("SENSORS_INTERFACE: serialize telemetry message magnetometer failed.");
-        return DIGITALTWIN_CLIENT_ERROR;
-    }
-}
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendGyroscope()
-{
-    if (appState.interfaceClientHandle == NULL)
-    {
-        LogError("SENSORS_INTERFACE: interfaceClientHandle is required to be initialized before sending telemetries");
-    }
-
-    char payloadBuffer[MAX_MASSAGE_SIZE];
-    if (Sensors_SerializeGyroscopeTelemetry(payloadBuffer, MAX_MASSAGE_SIZE))
-    {
-        return SensorsInterface_SendTelemetry_Internal(appState.interfaceClientHandle, SensorsInterface_GyroscopeTelemetry, payloadBuffer);
-    }
-    else
-    {
-        LogError("SENSORS_INTERFACE: serialize telemetry message gyroscope failed.");
-        return DIGITALTWIN_CLIENT_ERROR;
-    }
-}
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendAccelerometer()
-{
-    if (appState.interfaceClientHandle == NULL)
-    {
-        LogError("SENSORS_INTERFACE: interfaceClientHandle is required to be initialized before sending telemetries");
-    }
-
-    char payloadBuffer[MAX_MASSAGE_SIZE];
-    if (Sensors_SerializeAccelerometerTelemetry(payloadBuffer, MAX_MASSAGE_SIZE))
-    {
-        return SensorsInterface_SendTelemetry_Internal(appState.interfaceClientHandle, SensorsInterface_AccelerometerTelemetry, payloadBuffer);
-    }
-    else
-    {
-        LogError("SENSORS_INTERFACE: serialize telemetry message accelerometer failed.");
-        return DIGITALTWIN_CLIENT_ERROR;
-    }
-}
 
 // SensorsInterface_InterfaceRegisteredCallback is invoked when this interface
 // is successfully or unsuccessfully registered with the service, and also when the interface is deleted.

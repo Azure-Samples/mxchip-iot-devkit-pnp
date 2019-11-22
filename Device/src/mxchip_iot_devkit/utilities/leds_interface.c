@@ -206,7 +206,7 @@ DIGITALTWIN_INTERFACE_CLIENT_HANDLE LedsInterface_Create()
         interfaceHandle = NULL;
     }
 
-    else if ((result = DigitalTwin_InterfaceClient_SetCommandsCallback(interfaceHandle, LedsInterface_ProcessCommandUpdate)) != DIGITALTWIN_CLIENT_OK)
+    else if ((result = DigitalTwin_InterfaceClient_SetCommandsCallback(interfaceHandle, LedsInterface_ProcessCommandUpdate, NULL)) != DIGITALTWIN_CLIENT_OK)
     {
         LogError("LEDS_INTERFACE: DigitalTwin_InterfaceClient_SetCommandsCallbacks failed. error=<%s>", MU_ENUM_TO_STRING(DIGITALTWIN_CLIENT_RESULT, result));
         LedsInterface_Close(interfaceHandle);

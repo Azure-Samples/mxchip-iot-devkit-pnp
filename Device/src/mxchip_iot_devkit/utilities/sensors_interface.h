@@ -63,18 +63,6 @@ DIGITALTWIN_INTERFACE_CLIENT_HANDLE SensorsInterface_Create();
 
 void SensorsInterface_Close(DIGITALTWIN_INTERFACE_CLIENT_HANDLE digitalTwinInterfaceClientHandle);
 
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendHumidity();
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendTemperature();
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendPressure();
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendMagnetometer();
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendGyroscope();
-
-DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendAccelerometer();
-
 DIGITALTWIN_CLIENT_RESULT SensorsInterface_Telemetry_SendAll();
 
 #ifdef __cplusplus

@@ -205,7 +205,7 @@ DIGITALTWIN_INTERFACE_CLIENT_HANDLE ScreenInterface_Create()
         interfaceHandle = NULL;
     }
 
-    else if ((result = DigitalTwin_InterfaceClient_SetCommandsCallback(interfaceHandle, ScreenInterface_ProcessCommandUpdate)) != DIGITALTWIN_CLIENT_OK)
+    else if ((result = DigitalTwin_InterfaceClient_SetCommandsCallback(interfaceHandle, ScreenInterface_ProcessCommandUpdate, NULL)) != DIGITALTWIN_CLIENT_OK)
     {
         LogError("SCREEN_INTERFACE: DigitalTwin_InterfaceClient_SetCommandsCallbacks failed. error=<%s>", MU_ENUM_TO_STRING(DIGITALTWIN_CLIENT_RESULT, result));
         ScreenInterface_Close(interfaceHandle);

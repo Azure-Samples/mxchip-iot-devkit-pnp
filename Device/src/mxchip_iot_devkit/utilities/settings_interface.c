@@ -110,7 +110,7 @@ static void SettingsInterface_Property_FanSpeedCallback(const DIGITALTWIN_CLIENT
 
     // DigitalTwin_InterfaceClient_ReportPropertyAsync takes the DIGITALTWIN_CLIENT_PROPERTY_RESPONSE and returns information back to service.
     DIGITALTWIN_CLIENT_RESULT result = DigitalTwin_InterfaceClient_ReportPropertyAsync(appState.interfaceClientHandle, SettingsInterface_FanSpeedProperty, 
-        (const char*)dtClientPropertyUpdate->propertyDesired, &propertyResponse,
+        (const char*)dtClientPropertyUpdate->propertyDesired, strlen(dtClientPropertyUpdate->propertyDesired), &propertyResponse,
         SettingsInterface_PropertyCallback, SettingsInterface_FanSpeedProperty);
     if (result != DIGITALTWIN_CLIENT_OK)
     {
@@ -173,7 +173,7 @@ static void SettingsInterface_Property_VoltageCallback(const DIGITALTWIN_CLIENT_
 
     // DigitalTwin_InterfaceClient_ReportPropertyAsync takes the DIGITALTWIN_CLIENT_PROPERTY_RESPONSE and returns information back to service.
     DIGITALTWIN_CLIENT_RESULT result = DigitalTwin_InterfaceClient_ReportPropertyAsync(appState.interfaceClientHandle, SettingsInterface_VoltageProperty, 
-        (const char*)dtClientPropertyUpdate->propertyDesired, &propertyResponse,
+        (const char*)dtClientPropertyUpdate->propertyDesired, strlen(dtClientPropertyUpdate->propertyDesired), &propertyResponse,
         SettingsInterface_PropertyCallback, SettingsInterface_VoltageProperty);
     if (result != DIGITALTWIN_CLIENT_OK)
     {
@@ -236,7 +236,7 @@ static void SettingsInterface_Property_CurrentCallback(const DIGITALTWIN_CLIENT_
 
     // DigitalTwin_InterfaceClient_ReportPropertyAsync takes the DIGITALTWIN_CLIENT_PROPERTY_RESPONSE and returns information back to service.
     DIGITALTWIN_CLIENT_RESULT result = DigitalTwin_InterfaceClient_ReportPropertyAsync(appState.interfaceClientHandle, SettingsInterface_CurrentProperty, 
-        (const char*)dtClientPropertyUpdate->propertyDesired, &propertyResponse,
+        (const char*)dtClientPropertyUpdate->propertyDesired, strlen(dtClientPropertyUpdate->propertyDesired), &propertyResponse,
         SettingsInterface_PropertyCallback, SettingsInterface_CurrentProperty);
     if (result != DIGITALTWIN_CLIENT_OK)
     {
@@ -298,7 +298,7 @@ static void SettingsInterface_Property_IrSwitchCallback(const DIGITALTWIN_CLIENT
 
     // DigitalTwin_InterfaceClient_ReportPropertyAsync takes the DIGITALTWIN_CLIENT_PROPERTY_RESPONSE and returns information back to service.
     DIGITALTWIN_CLIENT_RESULT result = DigitalTwin_InterfaceClient_ReportPropertyAsync(appState.interfaceClientHandle, SettingsInterface_IrSwitchProperty, 
-        (const char*)dtClientPropertyUpdate->propertyDesired, &propertyResponse,
+        (const char*)dtClientPropertyUpdate->propertyDesired, strlen(dtClientPropertyUpdate->propertyDesired), &propertyResponse,
         SettingsInterface_PropertyCallback, SettingsInterface_IrSwitchProperty);
     if (result != DIGITALTWIN_CLIENT_OK)
     {
@@ -381,7 +381,7 @@ DIGITALTWIN_INTERFACE_CLIENT_HANDLE SettingsInterface_Create()
         interfaceHandle = NULL;
     }
 
-    else if ((result = DigitalTwin_InterfaceClient_SetPropertiesUpdatedCallback(interfaceHandle, SettingsInterface_ProcessPropertyUpdate)) != DIGITALTWIN_CLIENT_OK)
+    else if ((result = DigitalTwin_InterfaceClient_SetPropertiesUpdatedCallback(interfaceHandle, SettingsInterface_ProcessPropertyUpdate, NULL)) != DIGITALTWIN_CLIENT_OK)
     {
         LogError("SETTINGS_INTERFACE: DigitalTwin_InterfaceClient_SetPropertiesUpdatedCallback failed. error=<%s>", MU_ENUM_TO_STRING(DIGITALTWIN_CLIENT_RESULT, result));
         SettingsInterface_Close(interfaceHandle);
