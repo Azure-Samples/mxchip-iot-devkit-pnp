@@ -122,7 +122,7 @@ If you plan to modify the code, you should follow these instructions to [prepare
 1. Add a line in `arduino.additionalUrls` section that points to the DevKit SDK that supports IoT Plug and Play.
 
     ```json
-    https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/pnp/package_mxchip_board_index.json
+    https://raw.githubusercontent.com/vschina/azureiotdevkit_tools/pnp/package_mxchip_board_preview_index.json
     ```
 
     ![Arduino additional URL](media/howto-connect-devkit-pnp/add-url.png)
