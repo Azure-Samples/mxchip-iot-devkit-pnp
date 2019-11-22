@@ -131,7 +131,7 @@ If you plan to modify the code, you should follow these instructions to [prepare
 
 1. In the board manager page, choose **Refresh Package Indexes**.
 
-1. After the refresh completed, enter **AZ3166** in the search bar. Select and install latest version (>= 1.9.9).
+1. After the refresh completed, enter **AZ3166** in the search bar. Select and install latest version (>= 1.9.11-preview).
 
     ![Select DevKit SDK version](media/howto-connect-devkit-pnp/select-version.png)
 
