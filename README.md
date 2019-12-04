@@ -31,9 +31,21 @@ To complete the steps in this article, you need the following resources:
 
 ## Get device connection details
 
-In your Azure IoT Central application, select the **Administration** tab and select **Device Connection**. Make a note of the **Scope ID** and **Primary key**.
+1. In your Azure IoT Central application, select the **Device Templates** tab and select **New**. In the section of **Use a preconfigured device template**, choose **MXChip IoT DevKit** from the list. And choose **Next: Customize** and **Create**.
 
-![Device group connection details](media/howto-connect-devkit-pnp/device-group-connection-details.png)
+    ![Device template for MXChip IoT DevKit](media/howto-connect-devkit-pnp/device-template.png)
+
+1. Select **Devices** tab, in the devices list, select **MXChip IoT DevKit** and select **New** to create a new device from Device Template.
+
+    ![New device](media/howto-connect-devkit-pnp/new-device.png)
+
+1. In the pop-up window, enter the **Device ID** as `SampleDevKit` and **Device Name** as `MXChip IoT DevKit - Sample`. Ensure **Simulated** option is off. Then select **Create**.
+
+    ![Device ID and name](media/howto-connect-devkit-pnp/device-id-name.png)
+
+1. Click the device you just created and select **Connect**. Make a note of the **ID Scope**, **Device ID** and **Primary key**.
+
+    ![Device connection info](media/howto-connect-devkit-pnp/device-connection-info.png)
 
 ## Prepare the device
 
@@ -58,7 +70,7 @@ In your Azure IoT Central application, select the **Administration** tab and sel
 
     - The name of your WiFi network (SSID).
     - Your WiFi network password.
-    - The connection details: the **Device ID** that you can choose yourself, and the **Scope ID** and **Group SAS Primary Key** you made a note of previously.
+    - The connection details: the **Device ID** that you can choose yourself, and the **ID Scope** and **SAS Primary Key** you made a note of previously.
 
 
     > [NOTE]
