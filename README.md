@@ -70,7 +70,7 @@ To complete the steps in this article, you need the following resources:
 
     - The name of your WiFi network (SSID).
     - Your WiFi network password.
-    - The connection details: the **Device ID** that you can choose yourself, and the **ID Scope** and **SAS Primary Key** you made a note of previously.
+    - The connection details: enter the **Device ID**, **ID Scope** and **SAS Primary Key** you made a note of previously.
 
 
     > [NOTE]
