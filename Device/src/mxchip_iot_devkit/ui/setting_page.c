@@ -34,7 +34,7 @@ static WEB_PAGE_SETTING_ITEM az_iot_sas_token_items[] =
     },
     {
         "PrimaryKey",
-        "Group SAS Primary Key",
+        "SAS Primary Key",
         ITEM_INPUT_PASSWORD,
         NULL,
         NULL,
