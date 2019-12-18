@@ -263,7 +263,7 @@ static void connectIoTService(void)
     // Initialize device model application
     if (registerDeviceRetry(false, 10, 10000))
     {
-        Screen.print(1, "Connecting\r\n IoT Hub...");
+        Screen.print(1, "Connecting\r\n Azure IoT...");
 
         buff[0] = 0;
         if (secureDeviceTypeForProvisioning == SECURE_DEVICE_TYPE_SYMMETRIC_KEY)
@@ -284,7 +284,7 @@ static void connectIoTService(void)
         
         if (pnp_device_initialize(buff, certificates) != 0)
         {
-            Screen.print(1, "Error: \r\nIoT Hub is not\r\navailable.");
+            Screen.print(1, "Error: \r\nAzure IoT is not\r\navailable.");
         }
         else
         {
