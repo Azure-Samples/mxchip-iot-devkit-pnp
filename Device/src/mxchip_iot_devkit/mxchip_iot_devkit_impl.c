@@ -227,32 +227,3 @@ DIGITALTWIN_COMMAND_RESULT Screen_Command_Countdown(int number, unsigned int* st
     LogInfo("Execute 'countdown' command successfully");
     return DIGITALTWIN_COMMAND_OK;
 }
-
-bool Settings_Property_FanSpeedCallback(double fanSpeed)
-{
-    // TODO: provide implementation here
-    LogInfo("FanSpeed property new value: %f", fanSpeed);
-    return true;
-}
-
-bool Settings_Property_VoltageCallback(double voltage)
-{
-    // TODO: provide implementation here
-    LogInfo("Voltage property new value: %f", voltage);
-    return true;
-}
-
-bool Settings_Property_CurrentCallback(double current)
-{
-    // TODO: provide implementation here
-    LogInfo("Current property new value: %f", current);
-    return true;
-}
-
-bool Settings_Property_IrSwitchCallback(bool irSwitch)
-{
-    // TODO: provide implementation here
-    LogInfo("IrSwitch property new value: %d", irSwitch);
-    return true;
-}
-
