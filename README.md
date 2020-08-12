@@ -22,6 +22,8 @@ In this how-to article, you:
 - Prepare the device and connect it to your IoT Central application.
 - View the telemetry and properties from the device in IoT Central.
 
+> **Notice:** This project is archived and not actively maintained.
+
 ## Prerequisites
 
 To complete the steps in this article, you need the following resources:
